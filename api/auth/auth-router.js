@@ -71,14 +71,13 @@ router.post('/register', validateUsername, validateCreds,  (req, res, next) => {
   */
 });
 
-router.post('/login',  (req, res) => {
+router.post('/login',  validateCreds, (req, res) => {
   const {username, password} = req.body
   User.findBy({username})
   .then(user =>{
       if(user && bcrypt.compareSync(password, user.password))
       {
         const token = buildToken(user)
-        // console.log(`user.username ${user.username}`)
         res.status(200).json({
           message:`welcome, ${user.username}`,
           token
