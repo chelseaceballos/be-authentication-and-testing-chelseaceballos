@@ -10,6 +10,12 @@ function findBy(filter){
     .first()
 }
 
+function getUsername(username) {
+    return db("users")
+    .where({username})
+    .first()
+}
+
 function findById(id){
     return db("users")
     .where({id})
@@ -26,5 +32,6 @@ async function add(user) {
 module.exports = {
     find,
     findBy,
-    add
+    add,
+    getUsername
 }

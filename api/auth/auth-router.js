@@ -16,11 +16,23 @@ if (!user.username || !user.password) {
 }
 }
 
+const validateUsername = (req, res, next) => {
+  User.getUsername(req.body.username)
+  .then(data => {
+    if (data) {
+      next({status:400, message: "username taken"})
+    } else {
+      next()
+    }
+  })
+  .catch(next)
+}
 
 
 
 
-router.post('/register', validateCreds, (req, res, next) => {
+
+router.post('/register', validateUsername, validateCreds,  (req, res, next) => {
   const { username, password } = req.body
   const hash = bcrypt.hashSync(password, 8) //2^8
  User.add({ username, password: hash })
