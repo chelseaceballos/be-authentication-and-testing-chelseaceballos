@@ -55,6 +55,26 @@ Your finished project must include all of the following requirements (further in
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics.
 
 1. Differences between using _sessions_ or _JSON Web Tokens_ for authentication.
+
+Sessions uses authentication to verify the identity of a client attempting to use a resource (ex.restricted page meant only for admins or specific users). This information is saved by the server in the form of a unique session. So the user can register -> the server verifies registration credentials-> creates session for client-> server creates a unique cookie for client -> client persistently sends cookie with every request  -> server verifies cookie if valid with each request -> if yes(valid), client can access page. -> if not client restricted from accessing resource. (stateless session), best for personal projects
+
+
+JSON Web Tokens, are a way to transfer information in the form of a json object between server and client.
+Flow for JWT: User submits credentials to server -> instead of session id, a json web token is generated ( its three parts being 'header.payload.signature') created with private key on server -> jwt gets sent to client's browser stored in localStorage -> future requests will be verified through authorization header -> server validates signature -> access to resource ( or not :c )
+
+
 2. What does `bcryptjs` do to help us store passwords in a secure manner?
+bycryptjs is a library that helps developers hide plain text passwords by hashing them(disguise passwords). This prevents others stealing sensitive information that may be on a users account if the database has been compromised. It also helps fight against rainbow tables by preventing the reversal of hashed passwords, because bcrypt adds 'salt' as an extra protection layer on top of regular password-hashing
+
 3. How are unit tests different from integration and end-to-end testing?
+Unit tests, focus on testing individual modules of an application.
+Integration testing, focusses on modules that synchronously work together.
+End-to-end, take the longest, test the replication of an applications functionality or performance. Huge focus on user experience
+
+
 4. How does _Test Driven Development_ change the way we write applications and tests?
+TDD or Test Driven Development is a very programmatic way of coding. It creates a "safety net" that will alert the developer if they make a small change(in a previously passing test) that ends up triggering a failing test.
+
+    Step 1- write the least amount / simple code that will trigger failure
+    Step 2- write the least amount of code that will pass the test
+    Step 3- refactor code, make cleaner / more readable
