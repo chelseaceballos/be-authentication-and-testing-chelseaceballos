@@ -28,7 +28,14 @@ describe('IF THESE FAIL, ITS OVER', () =>{
 })
 
 describe('[POST] /api/auth/REGISTER ', () => {
-
+  it('cannot register with missing credentials', async () => {
+    let res = await request(server).post('/api/auth/register').send({username: 'bar'}) // missing password
+    expect(res.status).toBe(400)
+  })
+  it('res status 201 if credentials are both valid', async () => {
+    let res = await request(server).post('/api/auth/register').send({username: 'bar', password: '1234'})
+    expect(res.status).toBe(201)
+  })
 })
 
 describe('[POST] /api/auth/LOGIN ', () => {
