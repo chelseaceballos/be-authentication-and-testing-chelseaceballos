@@ -27,7 +27,7 @@ describe('IF THESE FAIL, ITS OVER', () =>{
   })
 })
 
-describe('[POST] /api/auth/REGISTER ', () => {
+describe('[POST] /api/auth/REGISTER', () => {
   it('cannot register with missing credentials', async () => {
     let res = await request(server).post('/api/auth/register').send({username: 'bar'}) // missing password
     expect(res.status).toBe(400)
@@ -38,8 +38,22 @@ describe('[POST] /api/auth/REGISTER ', () => {
   })
 })
 
-describe('[POST] /api/auth/LOGIN ', () => {
-
+describe('[POST] /api/auth/LOGIN', async () => {
+  it('resolves in sad path if incorrect password is entered status: 401', async () => {
+   //register first
+    let register = await request(server).post('/api/auth/register').send({username: 'bar', password: '1234'})
+   // login with  wrong pw
+    let login = await request(server).post('/api/auth/login').send({username: 'bar', password: 'bar'})
+  // assert
+    expect(login.status).toBe(401)
+    expect(login.body.message).toMatch("invalid credentials")
+  })
+  it('can login status:200', async () => {
+    let register = await request(server).post('/api/auth/register').send({username: 'bar', password: '1234'})
+    let login = await request(server).post('/api/auth/login').send({username: 'bar', password: '1234'})
+    expect(login.status).toBe(200)
+    expect(login.body.message).toMatch("welcome, bar")
+  })
 })
 
 describe('[GET] /api/JOKES ', () => {
