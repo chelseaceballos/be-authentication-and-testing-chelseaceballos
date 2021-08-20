@@ -17,9 +17,7 @@ jwt.verify(token, JWT_SECRET, (err, token) => {
 })
 }
 
-// const restrict = (req, res, next) => {
-//   next()
-// }
+
 
 module.exports = {
   restrict
